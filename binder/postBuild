@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Activate pixi environment
+set -e
+source activate "$CONDA_PREFIX"
+mamba activate "$CONDA_PREFIX"
+
+# Check if pixi is available
+if ! command -v pixi &> /dev/null; then
+    echo "Installing pixi..."
+    curl -fsSL https://pixi.sh/install.sh | bash
+    export PATH="$HOME/.pixi/bin:$PATH"
+fi
+
+# Install environment using pixi
+if [ -f "pixi.toml" ]; then
+    echo "Using pixi.toml to install environment..."
+    pixi install
+else
+    echo "No pixi.toml found, falling back to requirements.txt..."
+    if [ -f "requirements.txt" ]; then
+        python -m pip install -r requirements.txt
+    fi
+fi
+
+# Install RISE for slideshows
+pip install RISE
+
+echo "Post-build complete!"
+
