@@ -13,7 +13,7 @@ uproot
 jupyter
 ipykernel
 matplotlib
-RISE
+jupyterlab-rise
 
 # Development tools
 pytest
