@@ -2,14 +2,14 @@
 
 set -e
 
-# Install from requirements.txt
+echo "Starting postBuild script..."
+
+# Install from requirements.txt (pixi likely not available in Binder)
 if [ -f "requirements.txt" ]; then
     echo "Installing from requirements.txt..."
-    python -m pip install -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt
+else
+    echo "No requirements.txt found!"
 fi
-
-# Install RISE for slideshows
-echo "Installing RISE..."
-pip install RISE
 
 echo "Post-build complete!"
