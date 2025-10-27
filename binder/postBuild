@@ -4,7 +4,7 @@ set -e
 
 echo "Starting postBuild script..."
 
-# Install from requirements.txt (pixi likely not available in Binder)
+# Install from requirements.txt
 if [ -f "requirements.txt" ]; then
     echo "Installing from requirements.txt..."
     pip install --no-cache-dir -r requirements.txt
@@ -12,4 +12,13 @@ else
     echo "No requirements.txt found!"
 fi
 
+# Install and enable RISE for slideshows
+echo "Installing and enabling RISE..."
+pip install RISE
+
+# Enable RISE extension in Jupyter
+jupyter-nbextension install rise --py --sys-prefix --overwrite
+jupyter-nbextension enable rise --py --sys-prefix
+
 echo "Post-build complete!"
+echo "RISE extension is now available in Jupyter"
