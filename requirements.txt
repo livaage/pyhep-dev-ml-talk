@@ -19,7 +19,7 @@ uproot
 jupyter
 ipykernel
 matplotlib
-jupyterlab-rise
+rise
 
 # Development tools
 pytest
@@ -37,9 +37,14 @@ optuna
 onnx
 onnxruntime
 
-# Hugging Face
-transformers
+# Hugging Face (optional - examples work without it)
+# transformers
+huggingface_hub
+sentence-transformers
 
 # Additional utilities
 einops
 timm
+
+# Fast prototyping (optional)
+# fastai
