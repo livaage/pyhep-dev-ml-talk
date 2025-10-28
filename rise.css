@@ -5,6 +5,10 @@
     padding: 0 40px !important;
     text-align: left !important;
     font-size: 1.4em !important;  /* Bigger but not too big base font */
+    background-color: #000000 !important;
+    overflow-y: auto !important;  /* Allow scrolling on slides */
+    overflow-x: hidden !important;
+    max-height: 100vh !important;
 }
 
 /* Ensure content doesn't overflow and set black background */
@@ -17,32 +21,112 @@
     background-color: #000000 !important;
 }
 
-.reveal .slides section {
-    background-color: #000000 !important;
-}
-
-/* Fix for code cells - make bigger too and add background */
-.reveal pre {
+/* Fix for code cells - make bigger too and add background (INPUT only, not output) */
+.reveal pre:not(.output):not(.output *) {
     width: 90% !important;
     margin-left: 0 !important;
     padding: 10px !important;
     box-sizing: border-box !important;
-    font-size: 0.85em !important;  /* Reasonable code font size */
+}
+
+/* Code in input cells (not output) */
+.reveal pre:not(.output_area *):not(.output *) code {
+    font-size: 0.85em !important;
     background-color: #1a1a1a !important;  /* Dark gray for code blocks */
     border: 1px solid #333 !important;
 }
 
-/* Make code OUTPUT smaller */
-.reveal .output_area {
-    font-size: 0.7em !important;
+/* Make code OUTPUT EXTREMELY TINY - aggressive sizing with max specificity */
+.reveal .output_area * {
+    font-size: 1.1em !important;
+    line-height: 1.1 !important;
 }
 
-.reveal .output {
-    font-size: 0.7em !important;
+.reveal .output_area,
+.reveal .output_area * {
+    font-size: 0.35em !important;
+    max-height: 50vh !important;  /* Increased to allow scrolling */
+    line-height: 1.1 !important;
 }
 
-.reveal pre code {
+.reveal .output,
+.reveal .output * {
+    font-size: 0.35em !important;
+    max-height: 50vh !important;  /* Increased to allow scrolling */
+
+    line-height: 1.1 !important;
+}
+
+.reveal .output text,
+.reveal .output pre,
+.reveal .output pre code,
+.reveal .output_stream,
+.reveal .output_text,
+.reveal .output_html,
+.reveal .output_subarea,
+.reveal .jp-OutputArea-output,
+.reveal .jp-OutputArea-output * {
+    font-size: 0.35em !important;
+    line-height: 1.1 !important;
+    max-height: 50vh !important;  /* Increased to allow scrolling */
+
+}
+
+/* Fix output background and text colors for readability */
+.reveal .output_area,
+.reveal .jp-OutputArea-output,
+.reveal .jp-OutputArea-child {
+    background-color: #1e1e1e !important;
+}
+
+.reveal .output_area *,
+.reveal .jp-OutputArea-output *,
+.reveal .output * {
+    color: #f0f0f0 !important;
+}
+
+/* Ensure tables in output are readable and larger */
+.reveal .output_area table,
+.reveal .jp-OutputArea-output table {
+    background-color: #1e1e1e !important;
+    color: #f0f0f0 !important;
+    font-size: 0.8em !important;  /* Make tables larger */
+    border: 1px solid #555 !important;
+}
+
+.reveal .output_area table th,
+.reveal .jp-OutputArea-output table th {
+    background-color: #333333 !important;
+    color: #f0f0f0 !important;
+    border: 1px solid #555 !important;
+}
+
+.reveal .output_area table td,
+.reveal .jp-OutputArea-output table td {
+    background-color: #1e1e1e !important;
+    color: #f0f0f0 !important;
+    border: 1px solid #555 !important;
+    padding: 4px !important;
+}
+
+.reveal .output_area table tr:nth-child(even) td,
+.reveal .jp-OutputArea-output table tr:nth-child(even) td {
+    background-color: #2a2a2a !important;
+}
+
+/* Code in input code blocks (not in output areas) */
+.reveal pre:not(.output):not(.output *) {
+    width: 90% !important;
+    margin-left: 0 !important;
+    padding: 10px !important;
+    box-sizing: border-box !important;
+}
+
+.reveal .jp-CodeCell .jp-CodeCell-inputArea pre code,
+.reveal pre:not(.output_area *) code {
     font-size: 0.85em !important;
+    background-color: #1a1a1a !important;  /* Dark gray for code blocks */
+    border: 1px solid #333 !important;
 }
 
 /* Ensure markdown content is visible with bigger fonts */
@@ -68,10 +152,35 @@
     text-align: left !important;
 }
 
-/* Fix table overflow - make text bigger */
+/* Fix table overflow - make text bigger and visible with proper scrolling */
 .reveal table {
     width: 95% !important;
+    display: block !important;
     font-size: 1.0em !important;
+    color: #ffffff !important;  /* White text for tables */
+    background-color: #2a2a2a !important;  /* Dark gray background */
+    max-height: 60vh !important;
+    overflow: auto !important;
+    scrollbar-width: thin !important;
+    border: 1px solid #555 !important;
+}
+
+.reveal table th {
+    color: #ffffff !important;
+    background-color: #444444 !important;  /* Darker gray for headers */
+    border: 1px solid #666 !important;
+    padding: 8px !important;
+}
+
+.reveal table td {
+    color: #ffffff !important;
+    background-color: #2a2a2a !important;  /* Ensure cell background */
+    border: 1px solid #555 !important;
+    padding: 8px !important;
+}
+
+.reveal table tr:nth-child(even) td {
+    background-color: #333333 !important;  /* Alternate row color */
 }
 
 /* Inline code - smaller */
@@ -81,45 +190,109 @@
     color: #f0f0f0 !important;
 }
 
-/* Better scrolling for long content and tables */
-.reveal section {
-    max-height: 85vh !important;
-    overflow-y: auto !important;
+/* Additional code output sizing (supercedes earlier settings) */
+
+/* Enable scrolling for code cells with visible scrollbars */
+.reveal .jp-CodeCell,
+.reveal .cell {
+    overflow: visible !important;
+    max-height: none !important;
 }
 
-/* Make tables scrollable */
-.reveal table {
-    display: block !important;
-    max-height: 60vh !important;
-    overflow: auto !important;
+/* Make sure output areas can scroll properly with visible scrollbars */
+.reveal .jp-OutputArea {
+    overflow: visible !important;
+    max-height: none !important;
 }
 
-/* Fix code output area - make it contained and not auto-advance */
-.reveal .output_area {
+/* Target all output content to enable scrolling */
+.reveal .jp-OutputArea-prompt,
+.reveal .jp-OutputArea-output,
+.reveal .jp-RenderedText,
+.reveal pre {
     max-height: 50vh !important;
-    overflow-y: auto !important;
-    font-size: 0.65em !important;
-    line-height: 1.3 !important;
+    overflow-y: scroll !important;
 }
 
-.reveal .output {
-    max-height: 45vh !important;
-    overflow-y: auto !important;
+/* Force visible scrollbars on output areas */
+.reveal .jp-OutputArea-output,
+.reveal .output_area,
+.reveal .jp-OutputArea-jp-OutputArea-output {
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    max-height: 50vh !important;
+    height: auto !important;
+    display: block !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #555 #1a1a1a !important;
+    -webkit-overflow-scrolling: touch !important;
 }
 
-.reveal pre code {
-    max-height: 40vh !important;
-    overflow-y: auto !important;
+/* Force webkit scrollbars to always be visible */
+.reveal .jp-OutputArea-output::-webkit-scrollbar,
+.reveal .output_area::-webkit-scrollbar,
+.reveal .jp-OutputArea-jp-OutputArea-output::-webkit-scrollbar {
+    width: 12px !important;
+    display: block !important;
+    -webkit-appearance: scrollbar !important;
 }
 
-/* Prevent automatic advancement after code output */
-.reveal section.future,
-.reveal section.past {
+.reveal .jp-OutputArea-output::-webkit-scrollbar-track,
+.reveal .output_area::-webkit-scrollbar-track,
+.reveal .jp-OutputArea-jp-OutputArea-output::-webkit-scrollbar-track {
+    background: #1a1a1a !important;
+    display: block !important;
+}
+
+.reveal .jp-OutputArea-output::-webkit-scrollbar-thumb,
+.reveal .output_area::-webkit-scrollbar-thumb,
+.reveal .jp-OutputArea-jp-OutputArea-output::-webkit-scrollbar-thumb {
+    background: #555 !important;
+    border-radius: 4px !important;
+    display: block !important;
+}
+
+.reveal .jp-OutputArea-output::-webkit-scrollbar-thumb:hover,
+.reveal .output_area::-webkit-scrollbar-thumb:hover,
+.reveal .jp-OutputArea-jp-OutputArea-output::-webkit-scrollbar-thumb:hover {
+    background: #777 !important;
+}
+
+/* Add visible scrollbar to slides */
+.reveal .slides section::-webkit-scrollbar {
+    width: 12px !important;
+}
+
+.reveal .slides section::-webkit-scrollbar-track {
+    background: #1a1a1a !important;
+}
+
+.reveal .slides section::-webkit-scrollbar-thumb {
+    background: #555 !important;
+    border-radius: 4px !important;
+}
+
+.reveal .slides section::-webkit-scrollbar-thumb:hover {
+    background: #777 !important;
+}
+
+/* Enable proper fragment handling for vertical slides */
+/* Prevent auto-advance after code execution */
+.reveal section.present .fragment {
+    opacity: 1 !important;
     visibility: visible !important;
 }
 
-/* Ensure proper fragment handling for vertical slides */
-.reveal .slides section .fragment {
-    opacity: 1 !important;
+/* Disable automatic slide advancement on code execution */
+.reveal section[data-auto-animate],
+.reveal section[data-background-transition] {
+    transition: none !important;
 }
+
+/* Reset scroll position on slide transitions - CSS fallback */
+.reveal .slides section {
+    scroll-behavior: smooth !important;
+}
+
+/* Note: JavaScript auto-scroll is also included via rise_scroll.js */
 
