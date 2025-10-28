@@ -22,11 +22,16 @@ This notebook is **optimized for RISE** - a Jupyter extension that creates beaut
 # Install dependencies including RISE
 pip install -r requirements.txt
 
+# If you're using JupyterLab, also install:
+pip install jupyterlab-rise
+
 # If you get protobuf errors (MessageFactory issue), run:
 pip install --upgrade "protobuf>=3.20.3,<4.0.0"
 
-# Launch the notebook
-jupyter notebook pyhep-talk.ipynb
+# Launch the notebook (choose one):
+jupyter notebook pyhep-talk.ipynb    # For Jupyter Notebook
+# OR
+jupyter lab pyhep-talk.ipynb         # For JupyterLab
 
 # Click the chart icon (📊) in the toolbar to start the slideshow
 # Or use Alt+R (Windows/Linux) or Option+R (Mac)
